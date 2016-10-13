@@ -27364,6 +27364,12 @@
 
 	exports.default = Repos;
 
+
+	Repos.propTypes = {
+	  username: _react2.default.PropTypes.string.isRequired,
+	  repos: _react2.default.PropTypes.array.isRequired
+	};
+
 /***/ },
 /* 240 */
 /***/ function(module, exports, __webpack_require__) {
@@ -27429,6 +27435,12 @@
 
 	exports.default = UserProfile;
 
+
+	UserProfile.propTypes = {
+	  username: _react2.default.PropTypes.string.isRequired,
+	  bio: _react2.default.PropTypes.string.isRequired
+	};
+
 /***/ },
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
@@ -27488,6 +27500,12 @@
 	}(_react2.default.Component);
 
 	exports.default = Notes;
+
+
+	Notes.propTypes = {
+	  username: _react2.default.PropTypes.string.isRequired,
+	  notes: _react2.default.PropTypes.array.isRequired
+	};
 
 /***/ },
 /* 242 */

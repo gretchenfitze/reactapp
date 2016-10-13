@@ -14,7 +14,7 @@ export default class Profile extends React.Component {
     this.state = {
       notes: [1,2,3],
       bio: {
-        name: 'M K'
+        name: 'M K',
       },
       repos: ['a', 'b', 'c']
     }
