@@ -12,7 +12,7 @@ export default class Profile extends React.Component {
     super();
     ReactMixin(this, ReactFireMixin)
     this.state = {
-      notes: [1,2,3],
+      notes: [],
       bio: {
         name: 'M K',
       },
@@ -38,6 +38,10 @@ export default class Profile extends React.Component {
     this.unbind('notes');
   }
 
+  handleAddNote(newNote) {
+    this.ref.child(this.props.params.username).child(this.state.notes.length).set(newNote)
+  }
+
   render() {
     return (
       <div className="row">
@@ -48,11 +52,12 @@ export default class Profile extends React.Component {
           <Repos username={this.props.params.username} repos={this.state.repos} />
         </div>
         <div className="col-md-4">
-          <Notes username={this.props.params.username} notes={this.state.notes} />
+          <Notes
+            username={this.props.params.username}
+            notes={this.state.notes}
+            addNote={this.handleAddNote.bind(this)} />
         </div>
       </div>
     )
   }
 }
-
-// ReactMixin(Profile.prototype, ReactFireMixin);
