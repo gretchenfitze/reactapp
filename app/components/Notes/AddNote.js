@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default class AddNote extends React.Component {
   constructor() {
@@ -12,7 +12,7 @@ export default class AddNote extends React.Component {
   handleSubmit() {
     var newNote = this.note.value;
     this.note.value = '';
-    this.props.addNote(newNote)
+    this.props.addNote(newNote);
   }
 
   render() {
@@ -25,10 +25,10 @@ export default class AddNote extends React.Component {
           </button>
         </span>
       </div>
-    )
+    );
   }
 }
 
 AddNote.propTypes = {
   addNote: React.PropTypes.func.isRequired
-}
+};

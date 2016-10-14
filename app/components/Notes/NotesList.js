@@ -14,6 +14,6 @@ export default class NotesList extends React.Component {
       <ul className="list-group">
         {notes}
       </ul>
-    )
+    );
   }
 }
