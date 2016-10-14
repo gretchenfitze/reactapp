@@ -2,15 +2,20 @@ import React from 'react';
 import Repos from './Github/Repos';
 import UserProfile from './Github/UserProfile';
 import Notes from './Notes/Notes';
-import ReactMixin from 'react-mixin';
-import ReactFireMixin from 'reactfire';
-import Firebase from 'firebase';
-import helpers from '../utils/helpers'
+import getGithubInfo from '../utils/helpers'
+import Rebase from 're-base';
+
+const base = Rebase.createClass({
+  apiKey: 'AIzaSyBQSmKH2LUgbrlczNrDVudADbHSrKk9xFE',
+  authDomain: 'reactapp-3144b.firebaseapp.com',
+  databaseURL: 'https://reactapp-3144b.firebaseio.com',
+  storageBucket: 'reactapp-3144b.appspot.com',
+  messagingSenderId: '980557557074'
+});
 
 export default class Profile extends React.Component {
-  constructor() {
-    super();
-    ReactMixin(this, ReactFireMixin);
+  constructor(props) {
+    super(props);
     this.state = {
       notes: [],
       bio: {},
@@ -19,19 +24,26 @@ export default class Profile extends React.Component {
   }
 
   componentDidMount() {
-    let config = {
-      apiKey: 'AIzaSyBQSmKH2LUgbrlczNrDVudADbHSrKk9xFE',
-      authDomain: 'reactapp-3144b.firebaseapp.com',
-      databaseURL: 'https://reactapp-3144b.firebaseio.com',
-      storageBucket: 'reactapp-3144b.appspot.com',
-      messagingSenderId: '980557557074'
-    };
-    Firebase.initializeApp(config);
-    this.ref = Firebase.database().ref('/');
-    let childRef = this.ref.child(this.props.params.username);
-    this.bindAsArray(childRef, 'notes');
+    this.init(this.props.params.username);
+  }
 
-    helpers.getGithubInfo(this.props.params.username)
+  componentWillReceiveProps(nextProps) {
+    base.removeBinding(this.ref);
+    this.init(nextProps.params.username);
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
+  }
+
+  init(username) {
+    this.ref = base.bindToState(username, {
+      context: this,
+      asArray: true,
+      state: 'notes'
+    });
+
+    getGithubInfo(username)
       .then ((data) => {
         this.setState({
           bio: data.bio,
@@ -40,12 +52,10 @@ export default class Profile extends React.Component {
       });
   }
 
-  componentWillUnmount() {
-    this.unbind('notes');
-  }
-
   handleAddNote(newNote) {
-    this.ref.child(this.props.params.username).child(this.state.notes.length).set(newNote);
+    base.post(this.props.params.username, {
+      data: this.state.notes.concat([newNote])
+    });
   }
 
   render() {
@@ -61,7 +71,7 @@ export default class Profile extends React.Component {
           <Notes
             username={this.props.params.username}
             notes={this.state.notes}
-            addNote={this.handleAddNote.bind(this)} />
+            addNote={(newNote) => this.handleAddNote(newNote)} />
         </div>
       </div>
     );

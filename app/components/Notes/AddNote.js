@@ -1,16 +1,12 @@
 import React from 'react';
 
 export default class AddNote extends React.Component {
-  constructor() {
-    super();
-  }
-
   setRef(ref) {
     this.note = ref;
   }
 
   handleSubmit() {
-    var newNote = this.note.value;
+    const newNote = this.note.value;
     this.note.value = '';
     this.props.addNote(newNote);
   }
@@ -18,9 +14,9 @@ export default class AddNote extends React.Component {
   render() {
     return (
       <div className="input-group">
-        <input type="text" className="form-control" placeholder="Add New Note" ref={this.setRef.bind(this)}/>
+        <input type="text" className="form-control" placeholder="Add New Note" ref={(ref) => this.setRef(ref)}/>
         <span className='input-group-btn'>
-          <button className="btn btn-default" type="button" onClick={this.handleSubmit.bind(this)}>
+          <button className="btn btn-default" type="button" onClick={() => this.handleSubmit()}>
             Submit
           </button>
         </span>

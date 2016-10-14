@@ -14,9 +14,9 @@
     "eslint": "^3.7.1",
     "firebase": "^3.4.1",
     "history": "^4.3.0",
+    "re-base": "^2.2.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
-    "react-mixin": "^3.0.5",
     "react-router": "^2.8.1",
     "reactfire": "^1.0.0",
     "webpack": "^1.13.2"
